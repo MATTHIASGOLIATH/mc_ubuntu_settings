@@ -48,7 +48,7 @@ EOF
 # Neovim setup
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
-sudo apt install shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip neovim -y
+sudo apt install shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip neovim python3-pip -y
 sudo snap install bash-language-server --classic
 pip install pyright --break-system-packages
 git clone https://github.com/MATTHIASGOLIATH/mc_kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
