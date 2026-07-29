@@ -39,11 +39,11 @@ keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+0=reset_font_size
 EOF
 
-# Bash Aliases
-cat << EOF > ~/.bash_aliases
-alias ssh='ghostty +ssh --'
-alias neovim='nvim'
-EOF
+## Bash Aliases
+#cat << EOF > ~/.bash_aliases
+#alias ssh='ghostty +ssh --'
+#alias neovim='nvim'
+#EOF
 
 # Neovim setup
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
