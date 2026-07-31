@@ -11,8 +11,8 @@ window-padding-y = 4
 background-opacity = 0.99
 
 # split keys
-keybind = ctrl+shift+d=new_split:right
-keybind = ctrl+shift+alt+d=new_split:down
+keybind = ctrl+shift+f=new_split:right
+keybind = ctrl+shift+d=new_split:down
 keybind = ctrl+shift+enter=toggle_split_zoom
 
 # navigation keys
@@ -31,3 +31,6 @@ keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+plus=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+0=reset_font_size
+
+# shell adjustments
+shell-integration-features = sudo

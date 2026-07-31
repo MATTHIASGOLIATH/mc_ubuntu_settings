@@ -1,54 +1,41 @@
 #!/bin/bash
-set -e
+set -x
+trap read debug
 
-# Ghostty setup
-sudo snap install ghostty --classic
-cat << EOF > ~/.config/ghostty/config.ghostty
-# Catppuccin is an available theme from ghostty's defaults
-theme = Catppuccin Frappe
-
-# font adjustments
-font-family = UbuntuMono Nerd Font
-font-size = 15
-
-# window adjustments
-window-padding-x = 4
-window-padding-y = 4
-background-opacity = 0.99
-
-# split keys
-keybind = ctrl+shift+d=new_split:right
-keybind = ctrl+shift+alt+d=new_split:down
-keybind = ctrl+shift+enter=toggle_split_zoom
-
-# navigation keys
-keybind = ctrl+alt+h=goto_split:left
-keybind = ctrl+alt+l=goto_split:right
-keybind = ctrl+alt+j=goto_split:up
-keybind = ctrl+alt+k=goto_split:down
-
-# tab keys
-keybind = ctrl+shift+t=new_tab
-keybind = ctrl+shift+w=close_surface
-keybind = ctrl+tab=next_tab
-keybind = ctrl+shift+tab=previous_tab
-
-# zoom keys
-keybind = ctrl+plus=increase_font_size:1
-keybind = ctrl+minus=decrease_font_size:1
-keybind = ctrl+0=reset_font_size
-EOF
-
-## Bash Aliases
-#cat << EOF > ~/.bash_aliases
-#alias ssh='ghostty +ssh --'
-#alias neovim='nvim'
-#EOF
+# Constants: change these if they need changing
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+font="UbuntuMono"
+nvim_pkgs=(neovim curl shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip)
 
 # Neovim setup
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt update
-sudo apt install shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip neovim python3-pip -y
-sudo snap install bash-language-server --classic
-pip install pyright --break-system-packages
-git clone https://github.com/MATTHIASGOLIATH/mc_kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+if dpkg -s "${nvim_pkgs[0]}" >/dev/null 2>&1; then
+	echo "Neovim dependencies installed"
+else
+	echo "Installing Neovim dependencies"
+	sudo add-apt-repository ppa:neovim-ppa/unstable -y
+	sudo apt update
+	sudo apt install curl shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip neovim -y
+fi
+
+[[ -d "$config_dir/nvim/" ]] || cp -r nvim/ "$config_dir/nvim/"
+
+# Ghostty setup
+if [[ ! -d "/usr/share/fonts/${font,,}/" ]]; then
+	mkdir -p "/usr/share/fonts/${font,,}/"
+	curl -OL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$font.tar.xz" "/tmp/$font.tar.xz"
+	tar -xf "tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
+	fc-cache -fv
+fi 
+[[ -d "$config_dir/ghostty/" ]] || mkdir -p "$config_dir/ghostty/"
+sudo snap install ghostty --classic
+cp config.ghostty "$config_dir/ghostty/config.ghostty"
+
+# Bash Aliases
+sudo cat << EOF > ~/.bash_aliases
+alias ssh='ghostty +ssh --'
+alias neovim='nvim'
+EOF
+
+## TODO:
+## - More bash_alias stuff
+## - Probably more nvim stuff
