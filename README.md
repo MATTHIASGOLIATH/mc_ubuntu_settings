@@ -1,4 +1,4 @@
-# Matt's kickstart.nvim
+# Matt's kickstart
 
 ## Introduction
 
