@@ -2,11 +2,10 @@
 
 ## Introduction
 
-A starting point for Neovim that is:
+Matt's basic ubuntu user settings:
+- Download and setup Ghostty
+- Download and install Matt's Kickstart Neovim
 
-* Small
-* Single-file
-* Completely Documented
 
 **NOT** a Neovim distribution, but instead a starting point for your configuration.
 
@@ -28,20 +27,11 @@ alternative [installation methods below](#alternative-neovim-installation-method
 
 ### Install External Dependencies and Kickstart
 
-Installation is now handled by `install.sh` which installs pre-reqs via the Ubuntu [Install Recipes](#Install-Recipes) and the proper clone command into the standard config location. Since this repo is pre-forked, `nvim-pack-lock.json` is already removed from `.gitignore`
+Installation is now handled by `install.sh` which installs pre-reqs via the Ubuntu [Install Recipes](#Install-Recipes) and NO LONGER bases the git context in the nvim configuration directory. Since this repo is pre-forked, `nvim-pack-lock.json` is already removed from `.gitignore`
 
 ### Post Installation
 
 Start Neovim
-
-```sh
-nvim
-```
-
-That's it! `vim.pack` will install all the plugins from your config. Use
-`:lua vim.pack.update(nil, { offline = true })` to inspect plugin state and
-`:lua vim.pack.update()` to fetch updates (`:write` applies updates, `:quit`
-cancels them).
 
 #### Read The Friendly Documentation
 
