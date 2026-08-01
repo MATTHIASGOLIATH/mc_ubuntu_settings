@@ -1,6 +1,6 @@
 -- ============================================================
 -- SECTION 1: OPTIONS
--- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
+-- Core Neovim settings, leaders, options
 -- ============================================================
 do
   -- Enable faster startup by caching compiled Lua modules
@@ -13,7 +13,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = true
+  vim.g.have_nerd_font = false
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -88,8 +88,8 @@ do
 end
 
 -- ============================================================
--- SECTION 2: KEYMAPS
--- basic keymaps
+-- SECTION 2: KEYMAPS & AUTOCMDS
+-- basic keymaps, basic autocmds
 -- ============================================================
 do
   -- [[ Basic Keymaps ]]
@@ -296,13 +296,18 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' } }
+  vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
+  require('tokyonight').setup {
+    styles = {
+      comments = { italic = false }, -- Disable italics in comments
+    },
+  }
 
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'catppuccin-frappe'
+  vim.cmd.colorscheme 'tokyonight-night'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -604,7 +609,6 @@ do
     -- clangd = {},
     -- gopls = {},
     -- pyright = {},
-    -- bashls = {},
     -- rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -625,7 +629,8 @@ do
           if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
         end
 
-        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+        local current_settings = client.config.settings --[[@as lspconfig.settings.lua_ls]]
+        client.config.settings.Lua = vim.tbl_deep_extend('force', current_settings.Lua, {
           runtime = {
             version = 'LuaJIT',
             path = { 'lua/?.lua', 'lua/?/init.lua' },
@@ -660,6 +665,11 @@ do
   -- Automatically install LSPs and related tools to stdpath for Neovim
   require('mason').setup {}
 
+  -- Translates between nvim-lspconfig server names and mason.nvim package names (e.g. lua_ls <-> lua-language-server)
+  require('mason-lspconfig').setup {
+    automatic_enable = false, -- Change this to true if you want to automatically enable servers that are installed manually (e.g. via :Mason / :MasonInstall)
+  }
+
   -- Ensure the servers and tools above are installed
   --
   -- To check the current status of installed tools and/or manually install
@@ -692,8 +702,8 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        lua = true,
-        python = true,
+        -- lua = true,
+        -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -876,9 +886,9 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug'
-  require 'kickstart.plugins.indent_line'
-  require 'kickstart.plugins.lint'
+  -- require 'kickstart.plugins.debug'
+  -- require 'kickstart.plugins.indent_line'
+  -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
   -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
