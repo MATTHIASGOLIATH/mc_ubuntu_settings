@@ -6,6 +6,10 @@ config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 font="UbuntuMono"
 nvim_pkgs=(neovim curl shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip)
 
+# Cargo binstall setup
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+cargo binstall tree-sitter-cli
+
 # Neovim setup
 if dpkg -s "${nvim_pkgs[0]}" >/dev/null 2>&1; then
 	echo "Neovim dependencies installed"
@@ -13,7 +17,7 @@ else
 	echo "Installing Neovim dependencies"
 	sudo add-apt-repository ppa:neovim-ppa/unstable -y
 	sudo apt update
-	sudo apt install curl shellcheck tree-sitter-cli make gcc ripgrep fd-find unzip git xclip neovim -y
+	sudo apt install curl shellcheck make gcc ripgrep fd-find unzip git xclip neovim -y
 fi
 
 [[ -d "$config_dir/nvim/" ]] || cp -r nvim/ "$config_dir/nvim/"
