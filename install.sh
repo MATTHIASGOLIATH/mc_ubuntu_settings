@@ -22,7 +22,7 @@ fi
 if [[ ! -d "/usr/share/fonts/${font,,}/" ]]; then
 	sudo mkdir -p "/usr/share/fonts/${font,,}/"
 	sudo curl -OL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$font.tar.xz" "/tmp/$font.tar.xz"
-	sudo tar -xf "tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
+	sudo tar -xf "/tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
 	sudo fc-cache -fv
 fi 
 [[ -d "$config_dir/ghostty/" ]] || mkdir -p "$config_dir/ghostty/"
