@@ -1,6 +1,5 @@
 #!/bin/bash
-set -x
-trap read debug
+set -e
 
 # Constants: change these if they need changing
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
