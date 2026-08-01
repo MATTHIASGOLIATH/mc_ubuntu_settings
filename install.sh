@@ -20,10 +20,10 @@ fi
 
 # Ghostty setup
 if [[ ! -d "/usr/share/fonts/${font,,}/" ]]; then
-	mkdir -p "/usr/share/fonts/${font,,}/"
-	curl -OL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$font.tar.xz" "/tmp/$font.tar.xz"
-	tar -xf "tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
-	fc-cache -fv
+	sudo mkdir -p "/usr/share/fonts/${font,,}/"
+	sudo curl -OL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$font.tar.xz" "/tmp/$font.tar.xz"
+	sudo tar -xf "tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
+	sudo fc-cache -fv
 fi 
 [[ -d "$config_dir/ghostty/" ]] || mkdir -p "$config_dir/ghostty/"
 sudo snap install ghostty --classic
