@@ -40,23 +40,23 @@ if [[ ! -d "$config_dir/ghostty/" ]]; then
 	sudo snap install ghostty --classic
 fi
 # Update config regardless, it's cheap
-cp config.ghostty "$config_dir/ghostty/config.ghostty"
+cp ghostty/config.ghostty "$config_dir/ghostty/config.ghostty"
 
 # Update editor regardless, it's cheap
 sudo update-alternatives --set editor /usr/bin/nvim
 
 # Bash Aliases
-[[ -d "$HOME/.bash_aliases.d/" ]] || cp -r bash_aliases.d "$HOME/.bash_aliases.d/"
+[[ -d "$HOME/.bash_aliases.d/" ]] || cp -r bash/bash_aliases.d "$HOME/.bash_aliases.d/"
 
 # Bash Prompt
-[[ -f "$HOME/.bash_prompt" ]] || cp bash_prompt "$HOME/.bash_prompt"
+[[ -f "$HOME/.bash_prompt" ]] || cp bash/bash_prompt "$HOME/.bash_prompt"
 
 # Replace bashrc
-cp bashrc "$HOME/.bashrc"
+cp bash/bashrc "$HOME/.bashrc"
 source "$HOME/.bashrc"
 
 # Same with /etc/bash.bashrc
 [[ -d "/etc/bash_aliases.d/" ]] || sudo cp -r bash_aliases.d "/etc/bash_aliases.d/"
 [[ -f "/etc/bash_prompt" ]] || sudo cp bash_prompt "/etc/bash_prompt"
-sudo sed -i "s#PS1=.*#'source /etc/bash_prompt'#" /etc/bash.bashrc
+sudo sed -i "s#PS1=.*#,+1p,-1p'source /etc/bash_prompt'#" /etc/bash.bashrc
 
