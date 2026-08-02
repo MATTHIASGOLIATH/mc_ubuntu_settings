@@ -7,10 +7,12 @@ font="UbuntuMono"
 nvim_pkgs=(neovim npm curl shellcheck make gcc ripgrep fd-find unzip git xclip)
 
 # Cargo binstall setup
-mkdir -p "$HOME/.cargo/bin"
-curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-export PATH=$PATH:$HOME/.cargo/bin
-cargo-binstall tree-sitter-cli
+if [[ ! -d "$HOME/.cargo/bin" ]]; then
+	mkdir -p "$HOME/.cargo/bin"
+	curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+	export PATH=$PATH:$HOME/.cargo/bin
+	cargo-binstall tree-sitter-cli
+fi
 
 # Neovim setup
 if dpkg -s "${nvim_pkgs[@]}" >/dev/null 2>&1; then
@@ -32,11 +34,15 @@ if [[ ! -d "/usr/share/fonts/${font,,}/" ]]; then
 	sudo tar -xf "/tmp/$font.tar.xz" -C "/usr/share/fonts/${font,,}/"
 	sudo fc-cache -fv
 fi 
-[[ -d "$config_dir/ghostty/" ]] || mkdir -p "$config_dir/ghostty/"
-sudo snap install ghostty --classic
+
+if [[ ! -d "$config_dir/ghostty/" ]]; then
+	mkdir -p "$config_dir/ghostty/"
+	sudo snap install ghostty --classic
+fi
+# Update config regardless, it's cheap
 cp config.ghostty "$config_dir/ghostty/config.ghostty"
 
-# Update editor
+# Update editor regardless, it's cheap
 sudo update-alternatives --set editor /usr/bin/nvim
 
 # Bash Aliases
