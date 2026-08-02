@@ -48,3 +48,9 @@ sudo update-alternatives --set editor /usr/bin/nvim
 # Replace bashrc
 cp bashrc "$HOME/.bashrc"
 source "$HOME/.bashrc"
+
+# Same with /etc/bash.bashrc
+[[ -d "/etc/bash_aliases.d/" ]] || sudo cp -r bash_aliases.d "/etc/bash_aliases.d/"
+[[ -f "/etc/bash_prompt" ]] || sudo cp bash_prompt "/etc/bash_prompt"
+sudo sed -i "s#PS1=.*#'source /etc/bash_prompt'#" /etc/bash.bashrc
+
