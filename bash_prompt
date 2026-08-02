@@ -1,0 +1,43 @@
+# Catppuccin Frappé Colors
+# Green: #a6d189
+# Red:   #e78284
+# Blue:  #8caaee
+
+PROMPT_COMMAND='__ps1() {
+    local color
+    local reset="\[\e[0m\]"
+
+    # Color logic based on user
+    case "$USER" in
+        root)
+            color="\[\e[38;2;231;130;132m\]"  # Red
+            ;;
+        ansible)
+            color="\[\e[38;2;140;170;238m\]"  # Blue
+            ;;
+        *)
+            color="\[\e[38;2;166;209;137m\]"  # Green
+            ;;
+    esac
+
+    local user_part=""
+    local host_part=""
+
+    # Username logic
+    if [[ "$USER" != "mchalles" && "$USER" != "matt" ]]; then
+        user_part="${USER}@"
+    fi
+    host_part="\h"
+
+    # Python virtual environment
+    local venv_part=""
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        venv_part="($(basename "$VIRTUAL_ENV")) "
+    fi
+
+    # Current directory (depth of 2)
+    local dir_part
+    dir_part=$(pwd | awk -F/ '\''{if (NF>2) print "/"$(NF-1)"/"$NF; else print}'\'')
+
+    PS1="${color}${venv_part}${user_part}${host_part} ${dir_part} >${reset} "
+}; __ps1'

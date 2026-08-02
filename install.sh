@@ -36,10 +36,15 @@ fi
 sudo snap install ghostty --classic
 cp config.ghostty "$config_dir/ghostty/config.ghostty"
 
+# Update editor
+sudo update-alternatives --set editor /usr/bin/nvim
+
 # Bash Aliases
+[[ -d "$HOME/.bash_aliases.d/" ]] || cp -r bash_aliases.d "$HOME/.bash_aliases.d/"
 
-# Permanant additions to the path
+# Bash Prompt
+[[ -f "$HOME/.bash_prompt" ]] || cp bash_prompt "$HOME/.bash_prompt"
 
-# TODO:
-# More bash_alias stuff
-# Probably more nvim stuff
+# Replace bashrc
+cp bashrc "$HOME/.bashrc"
+source "$HOME/.bashrc"
