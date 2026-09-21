@@ -1,0 +1,44 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "catppuccin-frappe",
+    "mode": "system"
+  },
+  "animations": true,
+  "session": {
+    "scrollbar": false,
+    "thinking": "show",
+    "markdown": "rendered",
+    "grouping": "auto",
+    "image_preview": false,
+    "tps": true,
+    "new_location": "launch",
+    "permissions": "prompt",
+    "sidebar": "hide"
+  },
+  "tabs": {
+    "enabled": true,
+    "scope": "global",
+    "layout": "horizontal",
+    "indicators": "status"
+  },
+  "diffs": {
+    "view": "auto",
+    "wrap": "word"
+  },
+  "prompt": {
+    "paste": "full",
+    "image_preview": true
+  },
+  "attention": {
+    "notifications": true,
+    "sound": true
+  },
+  "terminal": {
+    "title": true,
+    "copy": "select"
+  },
+  "debug": {
+    "devtools": false
+  }
+}
